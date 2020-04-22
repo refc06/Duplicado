@@ -1,0 +1,301 @@
+
+<!DOCTYPE html>
+
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <title>app &#8212; documentación de Duplicado - 2.0</title>
+    <link rel="stylesheet" href="../_static/zerovm.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/translations.js"></script>
+    <link rel="index" title="Índice" href="../genindex.html" />
+    <link rel="search" title="Búsqueda" href="../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navegación</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Índice General"
+             accesskey="I">índice</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Índice de Módulos Python"
+             >módulos</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">documentación de Duplicado - 2.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Código de módulo</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Código fuente para app</h1><div class="highlight"><pre>
+<span></span><span class="c1">#duplicados.py</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">hashlib</span>
+ 
+<div class="viewcode-block" id="duplicados"><a class="viewcode-back" href="../index.html#app.duplicados">[documentos]</a><span class="k">def</span> <span class="nf">duplicados</span><span class="p">(</span><span class="n">parentFolder</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Función *duplicados* se utiliza en la opción &quot;2&quot; del :func:`menu`.  Esta función identifica archivos duplicados al generar un hash utilizando el algoritmo SHA256 para cada archivo evaluado.  Si el hash se repite entre dos archivos, se marca el duplicado.</span>
+
+<span class="sd">    :param parentFolder: Ruta que será utilizada para la busqueda</span>
+<span class="sd">    :type parentFolder: str</span>
+<span class="sd">    :return: Retorna diccionario que incluye path, y hash de cada archivo</span>
+<span class="sd">    :rtype: str</span>
+
+<span class="sd">    Variables utilizadas en :func:`duplicados`</span>
+<span class="sd">    </span>
+<span class="sd">    :param duplicado: Diccionario que contendrá la ruta de los archivos y los hash generados.</span>
+<span class="sd">    :param root: Directorio raíz dentro de la busqueda, como parte de funcion :func:`os.walk()`. </span>
+<span class="sd">    :type root: str</span>
+<span class="sd">    :param dirs: Subdirectorios dentro de la busqueda, como parte de función :func:`os.walk()`.</span>
+<span class="sd">    :type dirs: str</span>
+<span class="sd">    :param files: Archivos dentro de la busqueda, como parte de función :func:`os.walk()`.</span>
+<span class="sd">    :type files: str</span>
+<span class="sd">    :param path: Obtiene la ruta de cada archivo mediante :func:`os.path.join()`.</span>
+<span class="sd">    :type path: str</span>
+<span class="sd">    :param nomarchivo: Nombre de archivo dentro de la carpeta buscada (parentFolder).</span>
+<span class="sd">    :type nomarchivo: str</span>
+<span class="sd">    :param file_hash: Toma el valor hash generado por :func:`hashfile`.</span>
+<span class="sd">    :type file_hash: str</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">duplicado</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">root</span><span class="p">,</span> <span class="n">dirs</span><span class="p">,</span> <span class="n">files</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">parentFolder</span><span class="p">):</span>
+        <span class="c1">#Recorrido de carpeta parentFolder</span>
+        <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Revisando carpeta:  &#39;</span><span class="p">,</span> <span class="n">root</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">nomarchivo</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">nomarchivo</span><span class="p">)</span>
+            <span class="c1"># Calcular el hash</span>
+            <span class="n">file_hash</span> <span class="o">=</span> <span class="n">hashfile</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+            <span class="c1"># Append del path a diccionario duplicado</span>
+            <span class="k">if</span> <span class="n">file_hash</span> <span class="ow">in</span> <span class="n">duplicado</span><span class="p">:</span>
+                <span class="n">duplicado</span><span class="p">[</span><span class="n">file_hash</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+                <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;*Alerta* Duplicaodos: &#39;</span><span class="p">,</span> <span class="n">duplicado</span><span class="p">[</span><span class="n">file_hash</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">duplicado</span><span class="p">[</span><span class="n">file_hash</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">path</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">duplicado</span></div>
+
+<div class="viewcode-block" id="borrado"><a class="viewcode-back" href="../index.html#app.borrado">[documentos]</a><span class="k">def</span> <span class="nf">borrado</span><span class="p">(</span><span class="n">parentFolder</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Función *borrado* es utilizada por la opción &quot;2&quot; del :func:`menu`.  Esta función hace una busqueda en la carpeta (parentFolder).  Cada vez que identifique un archivo duplicado mediante el uso del hash SHA256, borra el archivos duplicando.</span>
+
+<span class="sd">    :param parentFolder: Ruta que será utilizada para la busqueda</span>
+<span class="sd">    :type parentFolder: str</span>
+<span class="sd">    :return: Retorna diccionario que incluye path, y hash de cada archivo</span>
+<span class="sd">    :rtype: str</span>
+
+<span class="sd">    Variables utilizadas en función :func:`borrado`</span>
+<span class="sd">    </span>
+<span class="sd">    :param duplicado: Diccionario que contendrá la ruta de los archivos y los hash generados.</span>
+<span class="sd">    :param root: Directorio raíz dentro de la busqueda, como parte de funcion :func:`os.walk()`. </span>
+<span class="sd">    :type root: str</span>
+<span class="sd">    :param dirs: Subdirectorios dentro de la busqueda, como parte de función :func:`os.walk()`.</span>
+<span class="sd">    :type dirs: str</span>
+<span class="sd">    :param files: Archivos dentro de la busqueda, como parte de función :func:`os.walk()`.</span>
+<span class="sd">    :type files: str</span>
+<span class="sd">    :param path: Obtiene la ruta de cada archivo mediante :func:`os.path.join()`.</span>
+<span class="sd">    :type path: str</span>
+<span class="sd">    :param nomarchivo: Nombre de archivo dentro de la carpeta buscada (parentFolder).</span>
+<span class="sd">    :type nomarchivo: str</span>
+<span class="sd">    :param file_hash: Toma el valor hash generado por :func:`hashfile`.</span>
+<span class="sd">    :type file_hash: str</span>
+<span class="sd">    &quot;&quot;&quot;</span>    
+    <span class="n">borrador</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">root</span><span class="p">,</span> <span class="n">dirs</span><span class="p">,</span> <span class="n">files</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">parentFolder</span><span class="p">):</span>
+        <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Buscando Duplicados:  &#39;</span><span class="p">,</span> <span class="n">root</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">nomarchivo</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">nomarchivo</span><span class="p">)</span>
+            <span class="n">file_hash</span> <span class="o">=</span> <span class="n">hashfile</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">file_hash</span> <span class="ow">in</span> <span class="n">borrador</span><span class="p">:</span>
+                 <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Borrando archivo duplicado: &#39;</span> <span class="o">+</span> <span class="n">path</span><span class="p">)</span>
+                 <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                 <span class="n">borrador</span><span class="p">[</span><span class="n">file_hash</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">path</span><span class="p">]</span></div>
+ 
+<div class="viewcode-block" id="hashfile"><a class="viewcode-back" href="../index.html#app.hashfile">[documentos]</a><span class="k">def</span> <span class="nf">hashfile</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">bloque</span> <span class="o">=</span> <span class="mi">65536</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Función *hashfile* se encarga de la abrir los archivo leidos por :func:`duplicados`o :func:`borrado` y genera el hash utilizando el algoritmo SHA256.  Los archivos son cargados en memoria en bloques de 65536 bytes para prevenir un desbordamiento de memoria al abrir archivos muy grandes.</span>
+
+<span class="sd">    :param path: Ruta que será utilizada para la busqueda</span>
+<span class="sd">    :type path: str</span>
+<span class="sd">    :param bloque: Constante que asigna el tamaño del buffer o bloques de bits que serán leidos en cada archivo.</span>
+<span class="sd">    :type bloque: int</span>
+<span class="sd">    :return: Retorna el hash (SHA256) de cada archivo leido.</span>
+<span class="sd">    :rtype: str</span>
+
+<span class="sd">    Variables utilizadas en función :func:`hashfile`</span>
+<span class="sd">    </span>
+<span class="sd">    :param archivo: Variable con el archivo que será abierto.</span>
+<span class="sd">    :param hasher: Permite la generación del hash SHA256. </span>
+<span class="sd">    :type hasher: str</span>
+<span class="sd">    :param buff: Contiene bloques de información de cada archivo.  Al momento de la lectura, cada archivo es partido en bloques que son leidos con variable *buff*.</span>
+<span class="sd">    :type buff: str</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>   
+    <span class="n">archivo</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span>
+    <span class="n">hasher</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">()</span>
+    <span class="n">buff</span> <span class="o">=</span> <span class="n">archivo</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">bloque</span><span class="p">)</span>
+    <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">buff</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">hasher</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">buff</span><span class="p">)</span>
+        <span class="n">buff</span> <span class="o">=</span> <span class="n">archivo</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">bloque</span><span class="p">)</span>
+    <span class="n">archivo</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">hasher</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="menu"><a class="viewcode-back" href="../index.html#app.menu">[documentos]</a><span class="k">def</span> <span class="nf">menu</span><span class="p">(</span><span class="n">rutatemp</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Genera el menú del programa.</span>
+
+<span class="sd">    :param rutatemp: Ruta que será utilizada para la busqueda</span>
+<span class="sd">    :type rutatemp: str</span>
+
+<span class="sd">    Variables utilizadas en función :func:`menu`</span>
+<span class="sd">    </span>
+<span class="sd">    :param opcion: Variable para la selección de la opción.</span>
+<span class="sd">    :type opcion: str</span>
+
+<span class="sd">    &quot;&quot;&quot;</span> 
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;|---------------------------------|&#39;</span><span class="p">)</span>
+        <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;|              MENU               |&#39;</span><span class="p">)</span>
+        <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;|---------------------------------|&#39;</span><span class="p">)</span>
+        <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;| 1. Listar archivos (Dir/SubDir) |&#39;</span><span class="p">)</span>
+        <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;| 2. Listar archivos duplicados   |&#39;</span><span class="p">)</span>
+        <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;| 3. Borrar archivos duplicados   |&#39;</span><span class="p">)</span>
+        <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;| 4. Cambiar ruta                 |&#39;</span><span class="p">)</span>
+        <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;| 0. SALIR                        |&#39;</span><span class="p">)</span>
+        <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;|---------------------------------|</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">opcion</span> <span class="o">=</span> <span class="nb">input</span> <span class="p">(</span><span class="s1">&#39;Seleccionar su opción: &#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">opcion</span> <span class="o">==</span> <span class="s1">&#39;1&#39;</span><span class="p">:</span>
+            <span class="n">listdir</span><span class="p">(</span><span class="n">rutatemp</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">opcion</span> <span class="o">==</span> <span class="s1">&#39;2&#39;</span><span class="p">:</span>
+            <span class="n">duplicados</span><span class="p">(</span><span class="n">rutatemp</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">opcion</span> <span class="o">==</span> <span class="s1">&#39;4&#39;</span><span class="p">:</span>
+            <span class="n">getruta</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">opcion</span> <span class="o">==</span> <span class="s1">&#39;3&#39;</span><span class="p">:</span>
+            <span class="n">borrado</span><span class="p">(</span><span class="n">rutatemp</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">opcion</span> <span class="o">==</span> <span class="s1">&#39;0&#39;</span><span class="p">:</span>
+            <span class="c1">#break</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;Opción no es válida.  Intente nuevamente&#39;</span><span class="p">)</span></div>
+            
+<div class="viewcode-block" id="getruta"><a class="viewcode-back" href="../index.html#app.getruta">[documentos]</a><span class="k">def</span> <span class="nf">getruta</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Función *getruta* se encarga de solicitar al usuario la ruta que será revisada por la aplicación para la identificación de los duplicados.  Esta función hace una validación previa si la ruta introducida existe en el sistema operativo o no.</span>
+
+<span class="sd">    Variables utilizadas en función :func:`getruta`</span>
+<span class="sd">    </span>
+<span class="sd">    :param x: Variable para cotrol del ciclo *while*.</span>
+<span class="sd">    :type x: str</span>
+<span class="sd">    :param ruta: Variable que introduce el usuario con la ruta para la búsqueda. </span>
+<span class="sd">    :type ruta: str</span>
+<span class="sd">    :param buff: Contiene bloques de información de cada archivo.  Al momento de la lectura, cada archivo es partido en bloques que son leidos con variable *buff*.</span>
+<span class="sd">    :type buff: str</span>
+
+<span class="sd">    &quot;&quot;&quot;</span> 
+    <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">while</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">1</span> <span class="p">:</span>
+        <span class="n">ruta</span> <span class="o">=</span> <span class="nb">input</span> <span class="p">(</span><span class="s1">&#39;Introduzca la ruta de la carpeta: &#39;</span><span class="p">)</span>
+        <span class="n">isExist</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">ruta</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">isExist</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">menu</span><span class="p">(</span><span class="n">ruta</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span> <span class="p">(</span><span class="n">ruta</span> <span class="o">+</span> <span class="s1">&#39; no es una ruta válida, por favor introducir la ruta correcta&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="listdir"><a class="viewcode-back" href="../index.html#app.listdir">[documentos]</a><span class="k">def</span> <span class="nf">listdir</span><span class="p">(</span><span class="n">rutatemp</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Función *listdir* es usada para listar los archivos en la carpeta seleccionada.</span>
+
+<span class="sd">    :param rutatemp: Ruta que será utilizada para la busqueda</span>
+<span class="sd">    :type rutatemp: str</span>
+
+<span class="sd">    Variables utilizadas en función :func:`listdir`</span>
+<span class="sd">    </span>
+<span class="sd">    :param contar: Cuenta la cantidad de archivos listados en la(s) carpeta(s) revisada(s).</span>
+<span class="sd">    :type contar: int</span>
+<span class="sd">    :param r: Directorio raíz dentro de la busqueda, como parte de funcion :func:`os.walk()`. </span>
+<span class="sd">    :type r: str</span>
+<span class="sd">    :param d: Subdirectorios dentro de la busqueda, como parte de función :func:`os.walk()`.</span>
+<span class="sd">    :type d: str</span>
+<span class="sd">    :param f: Archivos dentro de la busqueda, como parte de función :func:`os.walk()`.</span>
+<span class="sd">    :type f: str</span>
+<span class="sd">    :param files: Arreglo que consolida la ruta con el nombre de los archivos</span>
+<span class="sd">    :type files: str</span>
+
+<span class="sd">    &quot;&quot;&quot;</span> 
+    <span class="n">contar</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">files</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">r</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">rutatemp</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">fil</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">fil</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+            <span class="nb">print</span> <span class="p">(</span><span class="n">f</span><span class="p">)</span>
+            <span class="n">contar</span> <span class="o">=</span> <span class="n">contar</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Total de archivos revisados: &#39;</span><span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">contar</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n\n</span><span class="s1">&#39;</span><span class="p">)</span></div>
+
+ 
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Inicio del programa que imprime datos del proyecto y hace el llamado a :func:`getruta`.</span>
+
+<span class="sd">    :param ruta: Permite el llamado de la función :func:`getruta`.</span>
+<span class="sd">    :type ruta: str</span>
+
+<span class="sd">    &quot;&quot;&quot;</span> 
+    <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;UNIVERSIDAD INTERAMERICANA&#39;</span><span class="p">)</span>
+    <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;PROYECTO FINAL - PROGRAMACIÓN III&#39;</span><span class="p">)</span>
+    <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;Por: Rubén Fernández</span><span class="se">\n\n\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;*************************************************&#39;</span><span class="p">)</span>
+    <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;* SISTEMA PARA DETECCIÓN DE ARCHIVOS DUPLICADOS *&#39;</span><span class="p">)</span>
+    <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;*************************************************</span><span class="se">\n\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">ruta</span> <span class="o">=</span> <span class="n">getruta</span><span class="p">()</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Búsqueda rápida</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Ir a" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navegación</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Índice General"
+             >índice</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Índice de Módulos Python"
+             >módulos</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">documentación de Duplicado - 2.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Código de módulo</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Derechos de autor 2020, Ruben Fernandez.
+      Creado con <a href="http://sphinx-doc.org/">Sphinx</a> 3.0.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,251 @@
+
+<!DOCTYPE html>
+
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <title>Herramienta Duplicados: Documentación &#8212; documentación de Duplicado - 2.0</title>
+    <link rel="stylesheet" href="_static/zerovm.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="_static/translations.js"></script>
+    <link rel="index" title="Índice" href="genindex.html" />
+    <link rel="search" title="Búsqueda" href="search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navegación</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Índice General"
+             accesskey="I">índice</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Índice de Módulos Python"
+             >módulos</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">documentación de Duplicado - 2.0</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="herramienta-duplicados-documentacion">
+<h1>Herramienta Duplicados: Documentación<a class="headerlink" href="#herramienta-duplicados-documentacion" title="Enlazar permanentemente con este título">¶</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<p><strong>«Duplicados»</strong> es un sistema que permite identificar archivos duplicados en una ruta del disco duro del equipo donde es ejecutado. El mismo, extrae un <em>hash</em> de cada archivo en la ruta provista, y hace una comparaciòn de los datos. Este sistema <em>no busca duplicados de nombres</em>, sino de la información contenida dentro del archivo</p>
+<img alt="_images/logo.png" class="align-center" src="_images/logo.png" />
+<span class="target" id="module-app"></span><dl class="py function">
+<dt id="app.borrado">
+<code class="sig-prename descclassname">app.</code><code class="sig-name descname">borrado</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">parentFolder</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app.html#borrado"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#app.borrado" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Función <em>borrado</em> es utilizada por la opción «2» del <a class="reference internal" href="#app.menu" title="app.menu"><code class="xref py py-func docutils literal notranslate"><span class="pre">menu()</span></code></a>.  Esta función hace una busqueda en la carpeta (parentFolder).  Cada vez que identifique un archivo duplicado mediante el uso del hash SHA256, borra el archivos duplicando.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros</dt>
+<dd class="field-odd"><p><strong>parentFolder</strong> (<em>str</em>) – Ruta que será utilizada para la busqueda</p>
+</dd>
+<dt class="field-even">Devuelve</dt>
+<dd class="field-even"><p>Retorna diccionario que incluye path, y hash de cada archivo</p>
+</dd>
+<dt class="field-odd">Tipo del valor devuelto</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+<p>Variables utilizadas en función <a class="reference internal" href="#app.borrado" title="app.borrado"><code class="xref py py-func docutils literal notranslate"><span class="pre">borrado()</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>duplicado</strong> – Diccionario que contendrá la ruta de los archivos y los hash generados.</p></li>
+<li><p><strong>root</strong> (<em>str</em>) – Directorio raíz dentro de la busqueda, como parte de funcion <code class="xref py py-func docutils literal notranslate"><span class="pre">os.walk()</span></code>.</p></li>
+<li><p><strong>dirs</strong> (<em>str</em>) – Subdirectorios dentro de la busqueda, como parte de función <code class="xref py py-func docutils literal notranslate"><span class="pre">os.walk()</span></code>.</p></li>
+<li><p><strong>files</strong> (<em>str</em>) – Archivos dentro de la busqueda, como parte de función <code class="xref py py-func docutils literal notranslate"><span class="pre">os.walk()</span></code>.</p></li>
+<li><p><strong>path</strong> (<em>str</em>) – Obtiene la ruta de cada archivo mediante <code class="xref py py-func docutils literal notranslate"><span class="pre">os.path.join()</span></code>.</p></li>
+<li><p><strong>nomarchivo</strong> (<em>str</em>) – Nombre de archivo dentro de la carpeta buscada (parentFolder).</p></li>
+<li><p><strong>file_hash</strong> (<em>str</em>) – Toma el valor hash generado por <a class="reference internal" href="#app.hashfile" title="app.hashfile"><code class="xref py py-func docutils literal notranslate"><span class="pre">hashfile()</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="app.duplicados">
+<code class="sig-prename descclassname">app.</code><code class="sig-name descname">duplicados</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">parentFolder</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app.html#duplicados"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#app.duplicados" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Función <em>duplicados</em> se utiliza en la opción «2» del <a class="reference internal" href="#app.menu" title="app.menu"><code class="xref py py-func docutils literal notranslate"><span class="pre">menu()</span></code></a>.  Esta función identifica archivos duplicados al generar un hash utilizando el algoritmo SHA256 para cada archivo evaluado.  Si el hash se repite entre dos archivos, se marca el duplicado.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros</dt>
+<dd class="field-odd"><p><strong>parentFolder</strong> (<em>str</em>) – Ruta que será utilizada para la busqueda</p>
+</dd>
+<dt class="field-even">Devuelve</dt>
+<dd class="field-even"><p>Retorna diccionario que incluye path, y hash de cada archivo</p>
+</dd>
+<dt class="field-odd">Tipo del valor devuelto</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+<p>Variables utilizadas en <a class="reference internal" href="#app.duplicados" title="app.duplicados"><code class="xref py py-func docutils literal notranslate"><span class="pre">duplicados()</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>duplicado</strong> – Diccionario que contendrá la ruta de los archivos y los hash generados.</p></li>
+<li><p><strong>root</strong> (<em>str</em>) – Directorio raíz dentro de la busqueda, como parte de funcion <code class="xref py py-func docutils literal notranslate"><span class="pre">os.walk()</span></code>.</p></li>
+<li><p><strong>dirs</strong> (<em>str</em>) – Subdirectorios dentro de la busqueda, como parte de función <code class="xref py py-func docutils literal notranslate"><span class="pre">os.walk()</span></code>.</p></li>
+<li><p><strong>files</strong> (<em>str</em>) – Archivos dentro de la busqueda, como parte de función <code class="xref py py-func docutils literal notranslate"><span class="pre">os.walk()</span></code>.</p></li>
+<li><p><strong>path</strong> (<em>str</em>) – Obtiene la ruta de cada archivo mediante <code class="xref py py-func docutils literal notranslate"><span class="pre">os.path.join()</span></code>.</p></li>
+<li><p><strong>nomarchivo</strong> (<em>str</em>) – Nombre de archivo dentro de la carpeta buscada (parentFolder).</p></li>
+<li><p><strong>file_hash</strong> (<em>str</em>) – Toma el valor hash generado por <a class="reference internal" href="#app.hashfile" title="app.hashfile"><code class="xref py py-func docutils literal notranslate"><span class="pre">hashfile()</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="app.getruta">
+<code class="sig-prename descclassname">app.</code><code class="sig-name descname">getruta</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/app.html#getruta"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#app.getruta" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Función <em>getruta</em> se encarga de solicitar al usuario la ruta que será revisada por la aplicación para la identificación de los duplicados.  Esta función hace una validación previa si la ruta introducida existe en el sistema operativo o no.</p>
+<p>Variables utilizadas en función <a class="reference internal" href="#app.getruta" title="app.getruta"><code class="xref py py-func docutils literal notranslate"><span class="pre">getruta()</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>str</em>) – Variable para cotrol del ciclo <em>while</em>.</p></li>
+<li><p><strong>ruta</strong> (<em>str</em>) – Variable que introduce el usuario con la ruta para la búsqueda.</p></li>
+<li><p><strong>buff</strong> (<em>str</em>) – Contiene bloques de información de cada archivo.  Al momento de la lectura, cada archivo es partido en bloques que son leidos con variable <em>buff</em>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="app.hashfile">
+<code class="sig-prename descclassname">app.</code><code class="sig-name descname">hashfile</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">bloque</span><span class="o">=</span><span class="default_value">65536</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app.html#hashfile"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#app.hashfile" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Función <em>hashfile</em> se encarga de la abrir los archivo leidos por <code class="xref py py-func docutils literal notranslate"><span class="pre">duplicados`o</span> <span class="pre">:func:`borrado()</span></code> y genera el hash utilizando el algoritmo SHA256.  Los archivos son cargados en memoria en bloques de 65536 bytes para prevenir un desbordamiento de memoria al abrir archivos muy grandes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<em>str</em>) – Ruta que será utilizada para la busqueda</p></li>
+<li><p><strong>bloque</strong> (<em>int</em>) – Constante que asigna el tamaño del buffer o bloques de bits que serán leidos en cada archivo.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Devuelve</dt>
+<dd class="field-even"><p>Retorna el hash (SHA256) de cada archivo leido.</p>
+</dd>
+<dt class="field-odd">Tipo del valor devuelto</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+<p>Variables utilizadas en función <a class="reference internal" href="#app.hashfile" title="app.hashfile"><code class="xref py py-func docutils literal notranslate"><span class="pre">hashfile()</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>archivo</strong> – Variable con el archivo que será abierto.</p></li>
+<li><p><strong>hasher</strong> (<em>str</em>) – Permite la generación del hash SHA256.</p></li>
+<li><p><strong>buff</strong> (<em>str</em>) – Contiene bloques de información de cada archivo.  Al momento de la lectura, cada archivo es partido en bloques que son leidos con variable <em>buff</em>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="app.listdir">
+<code class="sig-prename descclassname">app.</code><code class="sig-name descname">listdir</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">rutatemp</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app.html#listdir"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#app.listdir" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Función <em>listdir</em> es usada para listar los archivos en la carpeta seleccionada.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros</dt>
+<dd class="field-odd"><p><strong>rutatemp</strong> (<em>str</em>) – Ruta que será utilizada para la busqueda</p>
+</dd>
+</dl>
+<p>Variables utilizadas en función <a class="reference internal" href="#app.listdir" title="app.listdir"><code class="xref py py-func docutils literal notranslate"><span class="pre">listdir()</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>contar</strong> (<em>int</em>) – Cuenta la cantidad de archivos listados en la(s) carpeta(s) revisada(s).</p></li>
+<li><p><strong>r</strong> (<em>str</em>) – Directorio raíz dentro de la busqueda, como parte de funcion <code class="xref py py-func docutils literal notranslate"><span class="pre">os.walk()</span></code>.</p></li>
+<li><p><strong>d</strong> (<em>str</em>) – Subdirectorios dentro de la busqueda, como parte de función <code class="xref py py-func docutils literal notranslate"><span class="pre">os.walk()</span></code>.</p></li>
+<li><p><strong>f</strong> (<em>str</em>) – Archivos dentro de la busqueda, como parte de función <code class="xref py py-func docutils literal notranslate"><span class="pre">os.walk()</span></code>.</p></li>
+<li><p><strong>files</strong> (<em>str</em>) – Arreglo que consolida la ruta con el nombre de los archivos</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="app.menu">
+<code class="sig-prename descclassname">app.</code><code class="sig-name descname">menu</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">rutatemp</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app.html#menu"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#app.menu" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Genera el menú del programa.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros</dt>
+<dd class="field-odd"><p><strong>rutatemp</strong> (<em>str</em>) – Ruta que será utilizada para la busqueda</p>
+</dd>
+</dl>
+<p>Variables utilizadas en función <a class="reference internal" href="#app.menu" title="app.menu"><code class="xref py py-func docutils literal notranslate"><span class="pre">menu()</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros</dt>
+<dd class="field-odd"><p><strong>opcion</strong> (<em>str</em>) – Variable para la selección de la opción.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Enlazar permanentemente con este título">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Índice</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Índice de Módulos</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Página de Búsqueda</span></a></p></li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">Tabla de contenido</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Herramienta Duplicados: Documentación</a></li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>Esta página</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/index.rst.txt"
+            rel="nofollow">Mostrar el código</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Búsqueda rápida</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Ir a" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navegación</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Índice General"
+             >índice</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Índice de Módulos Python"
+             >módulos</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">documentación de Duplicado - 2.0</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Derechos de autor 2020, Ruben Fernandez.
+      Creado con <a href="http://sphinx-doc.org/">Sphinx</a> 3.0.2.
+    </div>
+  </body>
+</html>
